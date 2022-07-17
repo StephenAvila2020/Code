@@ -1,14 +1,17 @@
 const axios = require('axios');
 
-const response = await axios.get('https://api.dehashed.com/search?query=email:', {
+
+const emails = {
+  method: 'GET',
+  url: 'https://api.dehashed.com/search?query=email:',
   headers: {
     'Accept': 'application/json'
   },
   auth: {
-    username: 'admin@dehashed.com',
-    password: 'dummy_key'
+    username: '',
+    password: ''
   }
-});
+};
 
 axios.request(emails).then(function (response) {
   console.log(response.data);
