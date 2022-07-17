@@ -1,3 +1,13 @@
+export async function checkDomain(): Promise<Boolean> {
+    let number: Number = 5;
+    let string: String = "Boo!";
+    return true;
+}
+
+/* 
+
+Old code from js
+
 const axios = require('axios');
 
 
@@ -19,3 +29,6 @@ axios.request(emails).then(function (response) {
   console.error(error);
 });
 
+
+
+*/
