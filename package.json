@@ -2,15 +2,20 @@
   "name": "code",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/app.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npx tsc && node dist/src/app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.27.2",
-    "express": "^4.18.1"
+    "dotenv": "^16.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.5",
+    "nodemon": "^2.0.19",
+    "typescript": "^4.7.4"
   }
 }
