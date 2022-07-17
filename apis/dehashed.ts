@@ -1,11 +1,36 @@
-export async function checkDomain(): Promise<Boolean> {
-    let number: Number = 5;
-    let string: String = "Boo!";
-    return true;
+import axios, { Axios, AxiosError, AxiosResponse } from "axios";
+
+interface breachDetail {
+  id: number;
+  email?: string;
+  username?: string;
+  password?: string;
 }
 
+export async function getCompromisedEmail(): Promise<breachDetail[] | []> {
+  try {
+    const requestHeaders = {
+      headers: {
+        Accept: "application/json",
+        Authorization:
+          `Basic ` +
+          Buffer.from(
+            process.env.DEHASHED_USER + ":" + process.env.DEHASHED_KEY
+          ),
+      },
+    };
+    const response: AxiosResponse<breachDetail[] | [] | null> = await axios.get(
+      "https://api.dehashed.com/search?query=domain:" + process.env.DOMAIN,
+      requestHeaders
+    ); 
+    return response.data
+  } catch (error) {
+    console.log(error, "This is an error");
+    return [];
+  }
+}
 /* 
-
+{"id": 5603803856, "email": "test@test", "username": "", "password": "test",}
 Old code from js
 
 const axios = require('axios');
