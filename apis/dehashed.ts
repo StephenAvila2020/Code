@@ -29,36 +29,3 @@ export async function getCompromisedEmail(): Promise<breachDetail[] | []> {
     return [];
   }
 }
-// Authorization:
-//     `Basic ` +
-//     Buffer.from(
-//       process.env.DEHASHED_USER + ":" + process.env.DEHASHED_KEY
-//     ),
-/* 
-{"id": 5603803856, "email": "test@test", "username": "", "password": "test",}
-Old code from js
-
-const axios = require('axios');
-
-
-const emails = {
-  method: 'GET',
-  url: 'https://api.dehashed.com/search?query=email:',
-  headers: {
-    'Accept': 'application/json'
-  },
-  auth: {
-    username: '',
-    password: ''
-  }
-};
-
-axios.request(emails).then(function (response) {
-  console.log(response.data);
-}).catch(function (error) {
-  console.error(error);
-});
-
-
-
-*/
