@@ -1,6 +1,6 @@
 import { config } from "dotenv";
 import { connectToDatabase } from '../apis/mongo';
-import {getCompromisedEmail} from '../apis/dehashed'
+import { getCompromisedEmail } from '../apis/dehashed'
 
 // Initiate .env variables
 config();
