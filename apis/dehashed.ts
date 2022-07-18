@@ -12,23 +12,28 @@ export async function getCompromisedEmail(): Promise<breachDetail[] | []> {
     const requestHeaders = {
       headers: {
         Accept: "application/json",
-        Authorization:
-          `Basic ` +
-          Buffer.from(
-            process.env.DEHASHED_USER + ":" + process.env.DEHASHED_KEY
-          ),
+      },
+      auth: {
+        username: process.env.DEHASHED_USER,
+        password: process.env.DEHASHED_KEY,
       },
     };
     const response: AxiosResponse<breachDetail[] | [] | null> = await axios.get(
       "https://api.dehashed.com/search?query=domain:" + process.env.DOMAIN,
       requestHeaders
-    ); 
-    return response.data
+    );
+    console.log(response.data, "this is the response");
+    return response.data;
   } catch (error) {
     console.log(error, "This is an error");
     return [];
   }
 }
+// Authorization:
+//     `Basic ` +
+//     Buffer.from(
+//       process.env.DEHASHED_USER + ":" + process.env.DEHASHED_KEY
+//     ),
 /* 
 {"id": 5603803856, "email": "test@test", "username": "", "password": "test",}
 Old code from js

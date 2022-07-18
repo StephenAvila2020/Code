@@ -1,9 +1,12 @@
 import { config } from "dotenv";
 import { connectToDatabase } from '../apis/mongo';
+import {getCompromisedEmail} from '../apis/dehashed'
 
 // Initiate .env variables
 config();
 console.log(process.env.TEST_THING);
+getCompromisedEmail();
+
 
 // Requirements
 // Initalize db handler and connection
