@@ -1,13 +1,12 @@
 import axios, { Axios, AxiosError, AxiosResponse } from "axios";
-
-interface breachDetail {
-  id: number;
+export interface BreachDetail {
+  _id?: any;
   email?: string;
   username?: string;
   password?: string;
 }
 
-export async function getCompromisedEmail(): Promise<breachDetail[] | []> {
+export async function getCompromisedEmail(): Promise<BreachDetail[] | []> {
   try {
     const requestHeaders = {
       headers: {
@@ -18,12 +17,14 @@ export async function getCompromisedEmail(): Promise<breachDetail[] | []> {
         password: process.env.DEHASHED_KEY,
       },
     };
-    const response: AxiosResponse<breachDetail[] | [] | null> = await axios.get(
+    const response: AxiosResponse<BreachDetail[] | [] | null> = await axios.get(
       "https://api.dehashed.com/search?query=domain:" + process.env.DOMAIN,
       requestHeaders
     );
     console.log(response.data, "this is the response");
+    
     return response.data;
+    
   } catch (error) {
     console.log(error, "This is an error");
     return [];
