@@ -13,17 +13,18 @@ async function connectToDatabase(): Promise<MongoClient | null> {
   }
 }
 
-export async function getAll(results) {
-  const client: MongoClient = await connectToDatabase();
-  try {
-    await client.connect();
-    const response = await getAll(client);
-    results(response);
-  } catch (error) {
-    console.log(error);
-  } finally {
-    client.close();
-  }
+export async function getAll(): Promise<BreachDetail[]> {
+  return new Promise(async(resolve, reject) =>{
+    const client: MongoClient = await connectToDatabase();
+    try {
+      await client.connect();
+      const response = await fetchData(client);
+      client.close();
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    } 
+  })
 }
 
 export async function insert(data: BreachDetail) {
