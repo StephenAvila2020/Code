@@ -1,19 +1,6 @@
-import axios, { Axios, AxiosError, AxiosResponse } from "axios";
-import { getAll, insert } from "../apis/mongo";
+import axios, { AxiosResponse } from "axios";
 
-export interface BreachDetail {
-  _id?: any;
-  email?: string;
-  username?: string;
-  password?: string;
-  hashed_password?: string;
-  name?: string;
-  address?: string;
-  phone?:string;
-  database_name?: string;
-}
-
-export async function getCompromised(results) {
+export async function getCompromised(callback: ResultsCallback) {
   try {
     const requestHeaders = {
       headers: {
@@ -25,14 +12,35 @@ export async function getCompromised(results) {
       },
     };
 
-    const response = await axios.get(
+    const response: AxiosResponse<DehashedResponse> = await axios.get(
       "https://api.dehashed.com/search?query=domain:" + process.env.DOMAIN,
       requestHeaders
     );
 
-    results(response.data);
+    callback(response.data);
   } catch (error) {
-    console.log(error, "This is an error");
+    // TODO: Slack API: error
     return [];
   }
+}
+
+export interface BreachDetail {
+  _id?: any;
+  email?: string;
+  username?: string;
+  password?: string;
+  hashed_password?: string;
+  name?: string;
+  address?: string;
+  phone?: string;
+  database_name?: string;
+}
+
+export interface DehashedResponse {
+  entries: BreachDetail[];
+  balance: number;
+}
+
+interface ResultsCallback {
+  (results: DehashedResponse): void;
 }
