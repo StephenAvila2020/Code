@@ -6,11 +6,14 @@ export interface BreachDetail {
   email?: string;
   username?: string;
   password?: string;
+  hashed_password?: string;
+  name?: string;
+  address?: string;
+  phone?:string;
+  database_name?: string;
 }
 
-
-export async function getCompromisedEmail(): Promise<BreachDetail[] | []> {
-  
+export async function getCompromised(results) {
   try {
     const requestHeaders = {
       headers: {
@@ -22,25 +25,12 @@ export async function getCompromisedEmail(): Promise<BreachDetail[] | []> {
       },
     };
 
-    const response: AxiosResponse<BreachDetail[] | [] | null> = await axios.get(
+    const response = await axios.get(
       "https://api.dehashed.com/search?query=domain:" + process.env.DOMAIN,
       requestHeaders
     );
 
-    for (let i = 0; i < response.data.length; i++) {
-      const BreachDetail =  {
-        _id: response.data[i]._id,
-        email: response.data[i].email,
-        username: response.data[i].username,
-        password: response.data[i].password,
-      } 
-      insert(BreachDetail);
-      console.log("this is the breach detail");
-    }
-    
-    console.log(response.data, "this is the response");
-    return response.data;
-
+    results(response.data);
   } catch (error) {
     console.log(error, "This is an error");
     return [];
